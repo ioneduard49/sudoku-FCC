@@ -38,16 +38,17 @@ class SudokuSolver {
     }
   }
 
-  checkRowPlacement(puzzleString, row, value) {
+  checkRowPlacement(puzzleString, row, column, value) {
     let grid = this.stringToBoard(puzzleString);
     row = this.letterToNumber(row);
-
-    for (let i = 0; i < 9; i++) {
-      if(grid[row - 1][i] == value) {
-        return false;
-      }
+    if(grid[row -1][column -1] == value) {
+      return true;
+    } else {
+      for (let i = 0; i < 9; i++) 
+        if(grid[row -1][i] == value) 
+          return false;
+      return true;
     }
-    return true;
   }
 
   checkColPlacement(puzzleString, row, column, value) {
@@ -66,13 +67,17 @@ class SudokuSolver {
     let grid = this.stringToBoard(puzzleString);
     row = this.letterToNumber(row);
     
-    let startRow = row - (row % 3),
-      startCol = col - (col % 3);
+    let startRow = row - (row % 3)
+    let startCol = col - (col % 3)
     
-    for (let i = 0; i < 3; i++) 
-      for (let j = 0; j < 3; j++) 
-        if (grid[i + startRow][j + startCol] == value) return false;
-    return true;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (grid[i + startRow][j + startCol] == value) {
+          return false
+        }
+      } 
+    }
+    return true
   }
 
   stringToBoard(sudokuString) {

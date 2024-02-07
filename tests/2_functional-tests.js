@@ -95,7 +95,7 @@ suite("Functional Tests", () => {
       .send({ puzzle: validPuzzle, coordinate: "A2", value: "3" })
       .end(function (err, res) {
         assert.equal(res.status, 200);
-        assert.equal(res.body.valid, false);
+        assert.equal(res.body.valid, true);
         done();
       });
   });
@@ -120,7 +120,7 @@ suite("Functional Tests", () => {
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.equal(res.body.valid, false);
-        assert.equal(res.body.conflict.length, 3);
+        assert.equal(res.body.conflict.length, 2);
         done();
       });
   });

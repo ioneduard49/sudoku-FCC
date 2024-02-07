@@ -10,31 +10,32 @@ module.exports = function (app) {
     .post((req, res) => {
       
       const { puzzle, coordinate, value } = req.body;
+      console.log(req.body)
       
       if (!puzzle || !coordinate || !value) {
         res.json({ error: "Required field(s) missing" });
         return;
-      } 
-      
-      if (solver.validate(puzzle) !== "Valid") {
-        res.json({ error: solver.validate(puzzle) });
+      }
+      let validation = solver.validate(puzzle);
+      if (validation !== "Valid") {
+        res.json({ error: validation });
         return;
       }
-
-      const row = coordinate.split("")[0];
-      const column = coordinate.split("")[1];
-      console.log(row, column);
+      let coordinateArray = coordinate.split("");
+      const row = coordinateArray[0];
+      const column = coordinateArray[1];
+      // console.log(row, column);
       if (
         coordinate.length !== 2 ||
-        !/^[a-i]/i.test(row) ||
-        !/[1-9]$/.test(column)
+        !/[a-i]/i.test(row) ||
+        !/[1-9]/i.test(column)
       ) {
-        console.log("invalid coordinate :>> ");
+        console.log("///"+row,column);
         res.json({ error: "Invalid coordinate" });
         return;
       }
       
-      if (!/^[1-9]$/.test(value)) {
+      if (!/[1-9]/i.test(value) || value > 9 || value < 1) {
         res.json({ error: "Invalid value" });
         return;
       }
@@ -64,11 +65,12 @@ module.exports = function (app) {
         }
         res.json({ valid: false, conflict: conflicts });
       }
+      console.log( coordinate, value );
     });
     
   app.route('/api/solve')
     .post((req, res) => {
-      const puzzle = req.body.puzzle;
+      const { puzzle } = req.body;
       if (solver.validate(puzzle) !== "Valid") {
         res.json({ error: solver.validate(puzzle) });
         return;

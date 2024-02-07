@@ -30,7 +30,7 @@ suite("UnitTests", () => {
     });
 
     test("Logic handles a valid row placement", function (done) {
-      assert.equal(solver.checkRowPlacement(validPuzzle, "A", "2", "9"), false);
+      assert.equal(solver.checkRowPlacement(validPuzzle, "A", "2", "9"), true);
       done();
     });
 
@@ -77,7 +77,7 @@ suite("UnitTests", () => {
       assert.equal(solver.completeSudoku(inValidPuzzle), false);
       done();
     });
-    test("Solver returns the the expected solution for an incomplete puzzzle", function (done) {
+    test("Solver returns the the expected solution for an incomplete puzzle", function (done) {
       assert.equal(
         solver.completeSudoku(
           "..839.7.575.....964..1.......16.29846.9.312.7..754.....62..5.78.8...3.2...492...1"
